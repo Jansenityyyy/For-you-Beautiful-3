@@ -52,14 +52,17 @@
             border-radius: 30px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             border: 2px solid rgba(255, 255, 255, 0.2);
+            max-width: 90%;
+            width: auto;
         }
 
         .greetings {
-            font-size: 2.5rem;
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
             font-weight: 700;
             color: #fff;
             margin-bottom: 20px;
             letter-spacing: 3px;
+            word-wrap: break-word;
         }
 
         .greetings span {
@@ -103,7 +106,7 @@
         .greetings span:nth-child(17) { animation-delay: 1.6s; }
 
         .description {
-            font-size: 1.2rem;
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
             color: rgba(255, 255, 255, 0.9);
             margin-bottom: 35px;
             line-height: 1.6;
@@ -116,7 +119,7 @@
         .heart-btn {
             position: relative;
             padding: 18px 50px 18px 65px;
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
             font-weight: 600;
             color: #fff;
             background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
@@ -194,6 +197,14 @@
         .floating-heart:nth-child(5) { left: 70%; animation-delay: 1.5s; }
         .floating-heart:nth-child(6) { left: 85%; animation-delay: 2.5s; }
 
+        /* Tablet */
+        @media screen and (max-width: 1024px) {
+            .container {
+                padding: 40px 50px;
+            }
+        }
+
+        /* Tablet Portrait */
         @media screen and (max-width: 768px) {
             .container {
                 padding: 30px 40px;
@@ -201,16 +212,15 @@
             }
             
             .greetings {
-                font-size: 1.8rem;
+                letter-spacing: 2px;
             }
             
             .description {
-                font-size: 1rem;
+                margin-bottom: 30px;
             }
             
             .heart-btn {
                 padding: 15px 40px 15px 55px;
-                font-size: 1rem;
             }
 
             .heart-btn::before {
@@ -219,28 +229,90 @@
             }
         }
 
+        /* Mobile Landscape */
+        @media screen and (max-width: 640px) {
+            .container {
+                padding: 25px 35px;
+            }
+            
+            .description {
+                margin-bottom: 25px;
+            }
+        }
+
+        /* Mobile Portrait */
         @media screen and (max-width: 480px) {
             .container {
                 padding: 25px 30px;
             }
             
             .greetings {
-                font-size: 1.5rem;
-                letter-spacing: 2px;
+                letter-spacing: 1px;
             }
             
             .description {
-                font-size: 0.9rem;
+                margin-bottom: 25px;
             }
             
             .heart-btn {
-                padding: 12px 35px 12px 50px;
-                font-size: 0.95rem;
+                padding: 14px 35px 14px 50px;
+            }
+
+            .heart-btn::before {
+                left: 13px;
+                font-size: 1.2rem;
+            }
+
+            .floating-heart {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Small Mobile */
+        @media screen and (max-width: 360px) {
+            .container {
+                padding: 20px 25px;
+            }
+            
+            .greetings {
+                margin-bottom: 15px;
+            }
+            
+            .description {
+                margin-bottom: 20px;
+            }
+            
+            .heart-btn {
+                padding: 12px 30px 12px 45px;
             }
 
             .heart-btn::before {
                 left: 12px;
-                font-size: 1.2rem;
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Landscape orientation */
+        @media screen and (max-height: 500px) and (orientation: landscape) {
+            body {
+                padding: 10px 0;
+            }
+
+            .container {
+                padding: 15px 30px;
+                max-height: 90vh;
+            }
+
+            .greetings {
+                margin-bottom: 10px;
+            }
+
+            .description {
+                margin-bottom: 15px;
+            }
+
+            .heart-btn {
+                padding: 10px 30px 10px 45px;
             }
         }
     </style>

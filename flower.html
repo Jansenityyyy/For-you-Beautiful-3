@@ -7,6 +7,45 @@
     <link rel="stylesheet" href="main.css">
     <link rel="icon" href="flowers.png" type="image/x-icon">
     <title>flowers</title>
+    <style>
+        .envelope-btn {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            z-index: 1000;
+            animation: btnAppear 1s 6s forwards;
+            padding: 20px 40px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.6);
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .envelope-btn:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.8);
+        }
+
+        @keyframes btnAppear {
+            to {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .envelope-btn {
+                padding: 15px 30px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
 </head>
 <body class="container">
     <div class="night"></div>
@@ -306,6 +345,10 @@
         </div>
       </div>
     </div>
+
+    <button class="envelope-btn" onclick="window.location.href='letter.html'">
+        Open Your Letter 💌
+    </button>
     
     <script src="main.js"></script>
   </body>

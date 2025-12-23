@@ -1,472 +1,518 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="flowers.png" type="image/x-icon">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="flowers.png" type="image/x-icon" />
     <title>Love Letter</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Dancing+Script:wght@400;700&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Dancing+Script:wght@400;700&display=swap");
 
-        body {
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            overflow: hidden;
-            position: relative;
-            font-family: 'Poppins', sans-serif;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: moveBackground 20s linear infinite;
-        }
+      body {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        overflow: hidden;
+        position: relative;
+        font-family: "Poppins", sans-serif;
+      }
 
-        @keyframes moveBackground {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
+      body::before {
+        content: "";
+        position: absolute;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.1) 1px,
+          transparent 1px
+        );
+        background-size: 50px 50px;
+        animation: moveBackground 20s linear infinite;
+      }
 
-        .envelope-container {
-            position: relative;
-            z-index: 10;
-            animation: fadeIn 1s ease-in;
+      @keyframes moveBackground {
+        0% {
+          transform: translate(0, 0);
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
+        100% {
+          transform: translate(50px, 50px);
         }
+      }
 
+      .envelope-container {
+        position: relative;
+        z-index: 10;
+        animation: fadeIn 1s ease-in;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .envelope {
+        position: relative;
+        width: min(350px, 90vw);
+        height: min(220px, 56vw);
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+
+      .envelope:hover {
+        transform: scale(1.05);
+      }
+
+      .envelope-body {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #f8e8e8 0%, #f0d0d0 100%);
+        border-radius: 15px;
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+        z-index: 1;
+      }
+
+      .envelope-flap {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: min(175px, 45vw) solid transparent;
+        border-right: min(175px, 45vw) solid transparent;
+        border-top: min(140px, 35vw) solid #ffb6c1;
+        top: 0;
+        left: 0;
+        transform-origin: top center;
+        transition: transform 0.8s ease;
+        z-index: 2;
+        filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+      }
+
+      .envelope.open .envelope-flap {
+        transform: rotateX(180deg);
+      }
+
+      .heart-seal {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: clamp(2rem, 7vw, 3.5rem);
+        z-index: 3;
+        animation: heartPulse 1.5s ease-in-out infinite;
+        transition: opacity 0.5s ease;
+      }
+
+      .envelope.open .heart-seal {
+        opacity: 0;
+      }
+
+      @keyframes heartPulse {
+        0%,
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+        }
+        50% {
+          transform: translate(-50%, -50%) scale(1.15);
+        }
+      }
+
+      .letter {
+        position: absolute;
+        width: min(500px, 90vw);
+        height: min(600px, 85vh);
+        background: #fff;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 15px;
+        padding: clamp(25px, 5vw, 45px);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.8s ease;
+        overflow-y: auto;
+        z-index: 100;
+      }
+
+      .letter.show {
+        opacity: 1;
+        pointer-events: all;
+        top: max(30%, 8vh);
+      }
+
+      .letter-content {
+        color: #333;
+      }
+
+      .letter-content h2 {
+        color: #ff6b9d;
+        margin-bottom: clamp(15px, 4vw, 25px);
+        font-size: clamp(1.3rem, 4vw, 1.8rem);
+        font-family: "Dancing Script", cursive;
+        text-align: center;
+      }
+
+      .letter-content p {
+        margin-bottom: clamp(12px, 3vw, 18px);
+        line-height: 1.8;
+        font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+        text-align: justify;
+      }
+
+      .signature {
+        margin-top: clamp(25px, 5vw, 35px);
+        text-align: right;
+      }
+
+      .signature p {
+        text-align: right;
+      }
+
+      .sign-name {
+        font-style: italic;
+        color: #ff6b9d;
+        font-weight: 600;
+        font-family: "Dancing Script", cursive;
+        font-size: clamp(2.5rem, 8vw, 4.5rem) !important; /* balanced size */
+      }
+
+      .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: #ff6b9d;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: clamp(30px, 8vw, 35px);
+        height: clamp(30px, 8vw, 35px);
+        font-size: clamp(1rem, 3vw, 1.2rem);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
+      }
+
+      .close-btn:hover {
+        background: #c44569;
+        transform: rotate(90deg);
+      }
+
+      .instruction {
+        position: absolute;
+        bottom: clamp(15px, 4vh, 30px);
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        font-size: clamp(0.85rem, 2.5vw, 1rem);
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        animation: bounce 2s ease-in-out infinite;
+        z-index: 5;
+        text-align: center;
+        padding: 0 20px;
+        white-space: nowrap;
+      }
+
+      .instruction.hide {
+        display: none;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateX(-50%) translateY(0);
+        }
+        50% {
+          transform: translateX(-50%) translateY(-10px);
+        }
+      }
+
+      /* Custom scrollbar */
+      .letter::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .letter::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+      }
+
+      .letter::-webkit-scrollbar-thumb {
+        background: #ffb6c1;
+        border-radius: 10px;
+      }
+
+      .letter::-webkit-scrollbar-thumb:hover {
+        background: #ff6b9d;
+      }
+
+      /* Tablet */
+      @media screen and (max-width: 1024px) {
         .envelope {
-            position: relative;
-            width: min(350px, 90vw);
-            height: min(220px, 56vw);
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .envelope:hover {
-            transform: scale(1.05);
-        }
-
-        .envelope-body {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #f8e8e8 0%, #f0d0d0 100%);
-            border-radius: 15px;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
-            z-index: 1;
+          width: min(320px, 85vw);
+          height: min(200px, 53vw);
         }
 
         .envelope-flap {
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-left: min(175px, 45vw) solid transparent;
-            border-right: min(175px, 45vw) solid transparent;
-            border-top: min(140px, 35vw) solid #ffb6c1;
-            top: 0;
-            left: 0;
-            transform-origin: top center;
-            transition: transform 0.8s ease;
-            z-index: 2;
-            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+          border-left: min(160px, 42.5vw) solid transparent;
+          border-right: min(160px, 42.5vw) solid transparent;
+          border-top: min(128px, 33vw) solid #ffb6c1;
+        }
+      }
+
+      /* Tablet Portrait */
+      @media screen and (max-width: 768px) {
+        .envelope {
+          width: min(280px, 80vw);
+          height: min(176px, 50vw);
         }
 
-        .envelope.open .envelope-flap {
-            transform: rotateX(180deg);
-        }
-
-        .heart-seal {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: clamp(2rem, 7vw, 3.5rem);
-            z-index: 3;
-            animation: heartPulse 1.5s ease-in-out infinite;
-            transition: opacity 0.5s ease;
-        }
-
-        .envelope.open .heart-seal {
-            opacity: 0;
-        }
-
-        @keyframes heartPulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.15); }
+        .envelope-flap {
+          border-left: min(140px, 40vw) solid transparent;
+          border-right: min(140px, 40vw) solid transparent;
+          border-top: min(112px, 32vw) solid #ffb6c1;
         }
 
         .letter {
-            position: absolute;
-            width: min(500px, 90vw);
-            height: min(600px, 85vh);
-            background: #fff;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border-radius: 15px;
-            padding: clamp(25px, 5vw, 45px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.8s ease;
-            overflow-y: auto;
-            z-index: 100;
+          width: min(300px, 88vw);
+          height: min(420px, 75vh);
         }
 
         .letter.show {
-            opacity: 1;
-            pointer-events: all;
-            top: max(30%, 8vh);
-        }
-
-        .letter-content {
-            color: #333;
-        }
-
-        .letter-content h2 {
-            color: #ff6b9d;
-            margin-bottom: clamp(15px, 4vw, 25px);
-            font-size: clamp(1.3rem, 4vw, 1.8rem);
-            font-family: 'Dancing Script', cursive;
-            text-align: center;
-        }
-
-        .letter-content p {
-            margin-bottom: clamp(12px, 3vw, 18px);
-            line-height: 1.8;
-            font-size: clamp(0.85rem, 2.5vw, 0.95rem);
-            text-align: justify;
-        }
-
-        .signature {
-            margin-top: clamp(25px, 5vw, 35px);
-            text-align: right;
-        }
-
-        .signature p {
-            text-align: right;
-        }
-
-        .sign-name {
-            font-style: italic;
-            color: #ff6b9d;
-            font-weight: 600;
-            font-family: 'Dancing Script', cursive;
-            font-size: clamp(1.1rem, 3vw, 1.3rem);
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #ff6b9d;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: clamp(30px, 8vw, 35px);
-            height: clamp(30px, 8vw, 35px);
-            font-size: clamp(1rem, 3vw, 1.2rem);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
-        }
-
-        .close-btn:hover {
-            background: #c44569;
-            transform: rotate(90deg);
+          top: max(30%, 8vh);
         }
 
         .instruction {
-            position: absolute;
-            bottom: clamp(15px, 4vh, 30px);
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            font-size: clamp(0.85rem, 2.5vw, 1rem);
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            animation: bounce 2s ease-in-out infinite;
-            z-index: 5;
-            text-align: center;
-            padding: 0 20px;
-            white-space: nowrap;
+          bottom: clamp(10px, 3vh, 20px);
+        }
+      }
+
+      /* Mobile Landscape */
+      @media screen and (max-width: 640px) {
+        .envelope {
+          width: min(260px, 75vw);
+          height: min(163px, 47vw);
         }
 
-        .instruction.hide {
-            display: none;
+        .envelope-flap {
+          border-left: min(130px, 37.5vw) solid transparent;
+          border-right: min(130px, 37.5vw) solid transparent;
+          border-top: min(104px, 30vw) solid #ffb6c1;
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-10px); }
+        .letter {
+          width: min(280px, 85vw);
+          height: min(400px, 72vh);
+        }
+      }
+
+      /* Mobile Portrait */
+      @media screen and (max-width: 480px) {
+        .envelope {
+          width: min(250px, 70vw);
+          height: min(157px, 44vw);
         }
 
-        /* Custom scrollbar */
+        .envelope-flap {
+          border-left: min(125px, 35vw) solid transparent;
+          border-right: min(125px, 35vw) solid transparent;
+          border-top: min(100px, 28vw) solid #ffb6c1;
+        }
+
+        .letter {
+          width: min(270px, 88vw);
+          height: min(380px, 70vh);
+        }
+
+        .close-btn {
+          top: 10px;
+          right: 10px;
+        }
+
         .letter::-webkit-scrollbar {
-            width: 6px;
+          width: 4px;
+        }
+      }
+
+      /* Small Mobile */
+      @media screen and (max-width: 360px) {
+        .envelope {
+          width: min(220px, 85vw);
+          height: min(138px, 54vw);
         }
 
-        .letter::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
+        .envelope-flap {
+          border-left: min(110px, 42.5vw) solid transparent;
+          border-right: min(110px, 42.5vw) solid transparent;
+          border-top: min(88px, 34vw) solid #ffb6c1;
         }
 
-        .letter::-webkit-scrollbar-thumb {
-            background: #ffb6c1;
-            border-radius: 10px;
+        .letter {
+          width: min(250px, 90vw);
+          height: min(360px, 72vh);
         }
 
-        .letter::-webkit-scrollbar-thumb:hover {
-            background: #ff6b9d;
+        .instruction {
+          font-size: 0.75rem;
+          white-space: normal;
+        }
+      }
+
+      /* Landscape orientation */
+      @media screen and (max-height: 500px) and (orientation: landscape) {
+        .envelope {
+          width: min(220px, 40vw);
+          height: min(138px, 25vw);
         }
 
-        /* Tablet */
-        @media screen and (max-width: 1024px) {
-            .envelope {
-                width: min(320px, 85vw);
-                height: min(200px, 53vw);
-            }
-
-            .envelope-flap {
-                border-left: min(160px, 42.5vw) solid transparent;
-                border-right: min(160px, 42.5vw) solid transparent;
-                border-top: min(128px, 33vw) solid #ffb6c1;
-            }
+        .envelope-flap {
+          border-left: min(110px, 20vw) solid transparent;
+          border-right: min(110px, 20vw) solid transparent;
+          border-top: min(88px, 16vw) solid #ffb6c1;
         }
 
-        /* Tablet Portrait */
-        @media screen and (max-width: 768px) {
-            .envelope {
-                width: min(280px, 80vw);
-                height: min(176px, 50vw);
-            }
-            
-            .envelope-flap {
-                border-left: min(140px, 40vw) solid transparent;
-                border-right: min(140px, 40vw) solid transparent;
-                border-top: min(112px, 32vw) solid #ffb6c1;
-            }
-            
-            .letter {
-                width: min(300px, 88vw);
-                height: min(420px, 75vh);
-            }
-
-            .letter.show {
-                top: max(30%, 8vh);
-            }
-
-            .instruction {
-                bottom: clamp(10px, 3vh, 20px);
-            }
+        .heart-seal {
+          font-size: clamp(1.5rem, 5vw, 2rem);
         }
 
-        /* Mobile Landscape */
-        @media screen and (max-width: 640px) {
-            .envelope {
-                width: min(260px, 75vw);
-                height: min(163px, 47vw);
-            }
-            
-            .envelope-flap {
-                border-left: min(130px, 37.5vw) solid transparent;
-                border-right: min(130px, 37.5vw) solid transparent;
-                border-top: min(104px, 30vw) solid #ffb6c1;
-            }
-
-            .letter {
-                width: min(280px, 85vw);
-                height: min(400px, 72vh);
-            }
+        .letter {
+          width: min(280px, 50vw);
+          height: 85vh;
+          padding: 15px;
         }
 
-        /* Mobile Portrait */
-        @media screen and (max-width: 480px) {
-            .envelope {
-                width: min(250px, 70vw);
-                height: min(157px, 44vw);
-            }
-            
-            .envelope-flap {
-                border-left: min(125px, 35vw) solid transparent;
-                border-right: min(125px, 35vw) solid transparent;
-                border-top: min(100px, 28vw) solid #ffb6c1;
-            }
-
-            .letter {
-                width: min(270px, 88vw);
-                height: min(380px, 70vh);
-            }
-
-            .close-btn {
-                top: 10px;
-                right: 10px;
-            }
-
-            .letter::-webkit-scrollbar {
-                width: 4px;
-            }
+        .letter.show {
+          top: 8vh;
         }
 
-        /* Small Mobile */
-        @media screen and (max-width: 360px) {
-            .envelope {
-                width: min(220px, 85vw);
-                height: min(138px, 54vw);
-            }
-            
-            .envelope-flap {
-                border-left: min(110px, 42.5vw) solid transparent;
-                border-right: min(110px, 42.5vw) solid transparent;
-                border-top: min(88px, 34vw) solid #ffb6c1;
-            }
-
-            .letter {
-                width: min(250px, 90vw);
-                height: min(360px, 72vh);
-            }
-
-            .instruction {
-                font-size: 0.75rem;
-                white-space: normal;
-            }
+        .letter-content h2 {
+          margin-bottom: 10px;
+          font-size: 1.2rem;
         }
 
-        /* Landscape orientation */
-        @media screen and (max-height: 500px) and (orientation: landscape) {
-            .envelope {
-                width: min(220px, 40vw);
-                height: min(138px, 25vw);
-            }
-            
-            .envelope-flap {
-                border-left: min(110px, 20vw) solid transparent;
-                border-right: min(110px, 20vw) solid transparent;
-                border-top: min(88px, 16vw) solid #ffb6c1;
-            }
-
-            .heart-seal {
-                font-size: clamp(1.5rem, 5vw, 2rem);
-            }
-
-            .letter {
-                width: min(280px, 50vw);
-                height: 85vh;
-                padding: 15px;
-            }
-
-            .letter.show {
-                top: 8vh;
-            }
-
-            .letter-content h2 {
-                margin-bottom: 10px;
-                font-size: 1.2rem;
-            }
-
-            .letter-content p {
-                margin-bottom: 10px;
-                font-size: 0.8rem;
-            }
-
-            .signature {
-                margin-top: 15px;
-            }
-
-            .instruction {
-                bottom: 8px;
-                font-size: 0.75rem;
-            }
+        .letter-content p {
+          margin-bottom: 10px;
+          font-size: 0.8rem;
         }
 
-        /* Extra small screens */
-        @media screen and (max-width: 320px) {
-            .envelope {
-                width: 90vw;
-                height: 57vw;
-            }
-            
-            .envelope-flap {
-                border-left: 45vw solid transparent;
-                border-right: 45vw solid transparent;
-                border-top: 36vw solid #ffb6c1;
-            }
-
-            .letter {
-                width: 92vw;
-                padding: 15px;
-            }
+        .signature {
+          margin-top: 15px;
         }
+
+        .instruction {
+          bottom: 8px;
+          font-size: 0.75rem;
+        }
+      }
+
+      /* Extra small screens */
+      @media screen and (max-width: 320px) {
+        .envelope {
+          width: 90vw;
+          height: 57vw;
+        }
+
+        .envelope-flap {
+          border-left: 45vw solid transparent;
+          border-right: 45vw solid transparent;
+          border-top: 36vw solid #ffb6c1;
+        }
+
+        .letter {
+          width: 92vw;
+          padding: 15px;
+        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="envelope-container">
-        <div class="envelope" id="envelope">
-            <div class="envelope-body"></div>
-            <div class="envelope-flap"></div>
-            <div class="heart-seal">❤️</div>
-        </div>
+      <div class="envelope" id="envelope">
+        <div class="envelope-body"></div>
+        <div class="envelope-flap"></div>
+        <div class="heart-seal">❤️</div>
+      </div>
 
-        <div class="letter" id="letter">
-            <button class="close-btn" onclick="closeLetter()">✕</button>
-            <div class="letter-content">
-                <h2>My Dearest Gorgeous,</h2>
-                <p>From the moment I met you, my world became brighter and more beautiful. You are the sunshine that brightens my darkest days and the moonlight that guides me through the night.</p>
-                
-                <p>Every moment with you is a treasure, every smile you share is a gift. Your laughter is my favorite melody, and your happiness is my greatest wish.</p>
-                
-                <p>I created this little garden of flowers for you because, just like these blooms, my love for you grows stronger with each passing day. Each petal represents a moment we've shared, and each color reflects the joy you bring into my life.</p>
-                
-                <p>Thank you for being you – beautiful, amazing, and absolutely wonderful in every way. You make every day feel like a celebration, and I'm so grateful to have you in my life.</p>
-                
-                <div class="signature">
-                    <p>Forever yours,</p>
-                    <p class="sign-name">With all my love ❤️</p>
-                </div>
-            </div>
-        </div>
+      <div class="letter" id="letter">
+        <button class="close-btn" onclick="closeLetter()">✕</button>
+        <div class="letter-content">
+          <h2>Hi Max, si "di A.I to" ahaahaa</h2>
+          <p>
+            First of all, Merry Christmas! I hope you’re having an amazing day
+            filled with laughter and good vibes.
+          </p>
 
-        <div class="instruction" id="instruction">
-            👆 Click the envelope to read your letter
+          <p>
+            So… Christmas also gave me the courage to finally tell you
+            something. I’ve been wanting to get to know you better, and I
+            figured there’s no better time than now to be honest about it.
+          </p>
+
+          <p>
+            We’ve known each other for a while, and over time I realized that I
+            genuinely enjoy the idea of knowing you beyond what we already do.
+            You seem like someone really interesting, and I’d love to get to
+            know the real you.
+          </p>
+
+          <p>
+            Also… not to brag, but I totally spent like 6 days coding this
+            letter just for you 😆. I’m not rushing anything or expecting
+            something big, I just genuinely want to see where things naturally
+            go.
+          </p>
+
+          <p>
+            If you’re open to it, I’d really appreciate the chance to talk
+            sometime. Either way, I hope your Christmas is warm, fun, and full
+            of happiness!
+          </p>
+
+          <div class="signature">
+            <p class="sign-name">Sen</p>
+          </div>
         </div>
+      </div>
+
+      <div class="instruction" id="instruction">
+        👆 Click the envelope to read your letter
+      </div>
     </div>
 
     <script>
-        const envelope = document.getElementById('envelope');
-        const letter = document.getElementById('letter');
-        const instruction = document.getElementById('instruction');
-        
-        envelope.addEventListener('click', function() {
-            this.classList.add('open');
-            letter.classList.add('show');
-            instruction.classList.add('hide');
-        });
+      const envelope = document.getElementById("envelope");
+      const letter = document.getElementById("letter");
+      const instruction = document.getElementById("instruction");
 
-        function closeLetter() {
-            envelope.classList.remove('open');
-            letter.classList.remove('show');
-            instruction.classList.remove('hide');
-        }
+      envelope.addEventListener("click", function () {
+        this.classList.add("open");
+        letter.classList.add("show");
+        instruction.classList.add("hide");
+      });
+
+      function closeLetter() {
+        envelope.classList.remove("open");
+        letter.classList.remove("show");
+        instruction.classList.remove("hide");
+      }
     </script>
-</body>
+  </body>
 </html>

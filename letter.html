@@ -36,27 +36,164 @@
         padding: clamp(10px, 2vh, 20px);
       }
 
+      /* Animated gradient background */
       body::before {
         content: "";
         position: absolute;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(
-          circle,
-          rgba(255, 255, 255, 0.1) 1px,
-          transparent 1px
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          45deg,
+          #ff6b9d20,
+          #c4456920,
+          #667eea20,
+          #764ba220
         );
-        background-size: 50px 50px;
-        animation: moveBackground 20s linear infinite;
+        background-size: 400% 400%;
+        animation: gradientFlow 15s ease infinite;
+        z-index: 0;
       }
 
-      @keyframes moveBackground {
+      @keyframes gradientFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      /* Floating hearts background */
+      .floating-hearts {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      .heart {
+        position: absolute;
+        bottom: -50px;
+        font-size: clamp(1.2rem, 3vw, 2rem);
+        opacity: 0;
+        animation: floatHeart 12s ease-in infinite;
+        filter: blur(0.5px);
+      }
+
+      @keyframes floatHeart {
         0% {
-          transform: translate(0, 0);
+          bottom: -50px;
+          opacity: 0;
+          transform: translateX(0) rotate(0deg);
+        }
+        10% {
+          opacity: 0.6;
+        }
+        90% {
+          opacity: 0.6;
         }
         100% {
-          transform: translate(50px, 50px);
+          bottom: 110vh;
+          opacity: 0;
+          transform: translateX(100px) rotate(360deg);
         }
+      }
+
+      .heart:nth-child(1) { left: 5%; animation-delay: 0s; color: #ff6b9d; }
+      .heart:nth-child(2) { left: 15%; animation-delay: 2s; color: #ff8fab; }
+      .heart:nth-child(3) { left: 25%; animation-delay: 4s; color: #ffa6c1; }
+      .heart:nth-child(4) { left: 35%; animation-delay: 1s; color: #ff6b9d; }
+      .heart:nth-child(5) { left: 45%; animation-delay: 5s; color: #ff8fab; }
+      .heart:nth-child(6) { left: 55%; animation-delay: 3s; color: #ffa6c1; }
+      .heart:nth-child(7) { left: 65%; animation-delay: 6s; color: #ff6b9d; }
+      .heart:nth-child(8) { left: 75%; animation-delay: 1.5s; color: #ff8fab; }
+      .heart:nth-child(9) { left: 85%; animation-delay: 4.5s; color: #ffa6c1; }
+      .heart:nth-child(10) { left: 95%; animation-delay: 2.5s; color: #ff6b9d; }
+
+      /* Sparkles */
+      .sparkles {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      .sparkle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: white;
+        border-radius: 50%;
+        box-shadow: 0 0 10px white;
+        animation: sparkleAnimation 3s ease-in-out infinite;
+      }
+
+      @keyframes sparkleAnimation {
+        0%, 100% {
+          opacity: 0;
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .sparkle:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+      .sparkle:nth-child(2) { top: 40%; left: 20%; animation-delay: 0.5s; }
+      .sparkle:nth-child(3) { top: 60%; left: 80%; animation-delay: 1s; }
+      .sparkle:nth-child(4) { top: 80%; left: 70%; animation-delay: 1.5s; }
+      .sparkle:nth-child(5) { top: 30%; left: 90%; animation-delay: 2s; }
+      .sparkle:nth-child(6) { top: 70%; left: 30%; animation-delay: 2.5s; }
+      .sparkle:nth-child(7) { top: 50%; left: 50%; animation-delay: 1.2s; }
+      .sparkle:nth-child(8) { top: 15%; left: 60%; animation-delay: 1.8s; }
+
+      /* Soft circles decoration */
+      .circles {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 0;
+      }
+
+      .circle {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        animation: floatCircle 20s ease-in-out infinite;
+      }
+
+      @keyframes floatCircle {
+        0%, 100% {
+          transform: translateY(0) scale(1);
+        }
+        50% {
+          transform: translateY(-50px) scale(1.1);
+        }
+      }
+
+      .circle:nth-child(1) {
+        width: 300px;
+        height: 300px;
+        top: -100px;
+        left: -50px;
+        animation-delay: 0s;
+      }
+
+      .circle:nth-child(2) {
+        width: 200px;
+        height: 200px;
+        top: 60%;
+        right: -50px;
+        animation-delay: 2s;
+      }
+
+      .circle:nth-child(3) {
+        width: 150px;
+        height: 150px;
+        bottom: 10%;
+        left: 20%;
+        animation-delay: 4s;
       }
 
       .envelope-container {
@@ -99,9 +236,9 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        background: linear-gradient(135deg, #f8e8e8 0%, #f0d0d0 100%);
+        background: linear-gradient(135deg, #fff5f7 0%, #ffe8ee 100%);
         border-radius: clamp(10px, 2vw, 15px);
-        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 15px 50px rgba(255, 107, 157, 0.3);
         z-index: 1;
       }
 
@@ -117,7 +254,7 @@
         transform-origin: top center;
         transition: transform 0.8s ease;
         z-index: 2;
-        filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+        filter: drop-shadow(0 5px 15px rgba(255, 107, 157, 0.3));
       }
 
       .envelope.open .envelope-flap {
@@ -133,6 +270,7 @@
         z-index: 3;
         animation: heartPulse 1.5s ease-in-out infinite;
         transition: opacity 0.5s ease;
+        filter: drop-shadow(0 5px 15px rgba(255, 107, 157, 0.5));
       }
 
       .envelope.open .heart-seal {
@@ -153,13 +291,13 @@
         position: fixed;
         width: clamp(280px, 90vw, 500px);
         max-height: clamp(400px, 85vh, 600px);
-        background: #fff;
+        background: linear-gradient(135deg, #ffffff 0%, #fff9fb 100%);
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         border-radius: clamp(10px, 2vw, 15px);
         padding: clamp(20px, 4vw, 45px);
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 20px 60px rgba(255, 107, 157, 0.3);
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.8s ease;
@@ -167,6 +305,21 @@
         overflow-x: hidden;
         z-index: 100;
         -webkit-overflow-scrolling: touch;
+        border: 2px solid rgba(255, 182, 193, 0.3);
+      }
+
+      .letter::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+          radial-gradient(circle at 20% 30%, rgba(255, 182, 193, 0.1) 0%, transparent 50%),
+          radial-gradient(circle at 80% 70%, rgba(255, 107, 157, 0.1) 0%, transparent 50%);
+        pointer-events: none;
+        border-radius: clamp(10px, 2vw, 15px);
       }
 
       .letter.show {
@@ -176,6 +329,8 @@
 
       .letter-content {
         color: #333;
+        position: relative;
+        z-index: 1;
       }
 
       .letter-content h2 {
@@ -185,6 +340,7 @@
         font-family: "Dancing Script", cursive;
         text-align: center;
         line-height: 1.3;
+        text-shadow: 0 2px 10px rgba(255, 107, 157, 0.2);
       }
 
       .letter-content p {
@@ -211,13 +367,14 @@
         font-weight: 600;
         font-family: "Dancing Script", cursive;
         font-size: clamp(2rem, 6vw, 4.5rem) !important;
+        text-shadow: 0 3px 15px rgba(255, 107, 157, 0.3);
       }
 
       .close-btn {
         position: absolute;
         top: clamp(10px, 2vw, 15px);
         right: clamp(10px, 2vw, 15px);
-        background: #ff6b9d;
+        background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 100%);
         color: white;
         border: none;
         border-radius: 50%;
@@ -238,7 +395,7 @@
 
       @media (hover: hover) and (pointer: fine) {
         .close-btn:hover {
-          background: #c44569;
+          background: linear-gradient(135deg, #c44569 0%, #ff6b9d 100%);
           transform: rotate(90deg);
         }
       }
@@ -258,9 +415,13 @@
         animation: bounce 2s ease-in-out infinite;
         z-index: 5;
         text-align: center;
-        padding: 0 clamp(10px, 3vw, 20px);
+        padding: clamp(8px, 2vw, 12px) clamp(15px, 4vw, 25px);
         max-width: 90%;
         line-height: 1.4;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border-radius: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
       }
 
       .instruction.hide {
@@ -283,17 +444,17 @@
       }
 
       .letter::-webkit-scrollbar-track {
-        background: #f1f1f1;
+        background: rgba(255, 182, 193, 0.2);
         border-radius: 10px;
       }
 
       .letter::-webkit-scrollbar-thumb {
-        background: #ffb6c1;
+        background: linear-gradient(to bottom, #ffb6c1, #ff6b9d);
         border-radius: 10px;
       }
 
       .letter::-webkit-scrollbar-thumb:hover {
-        background: #ff6b9d;
+        background: linear-gradient(to bottom, #ff6b9d, #c44569);
       }
 
       /* Landscape orientation adjustments */
@@ -418,6 +579,37 @@
     </style>
   </head>
   <body>
+    <!-- Decorative background elements -->
+    <div class="circles">
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+    </div>
+
+    <div class="floating-hearts">
+      <div class="heart">💕</div>
+      <div class="heart">💖</div>
+      <div class="heart">💗</div>
+      <div class="heart">💓</div>
+      <div class="heart">💕</div>
+      <div class="heart">💖</div>
+      <div class="heart">💗</div>
+      <div class="heart">💓</div>
+      <div class="heart">💕</div>
+      <div class="heart">💖</div>
+    </div>
+
+    <div class="sparkles">
+      <div class="sparkle"></div>
+      <div class="sparkle"></div>
+      <div class="sparkle"></div>
+      <div class="sparkle"></div>
+      <div class="sparkle"></div>
+      <div class="sparkle"></div>
+      <div class="sparkle"></div>
+      <div class="sparkle"></div>
+    </div>
+
     <div class="envelope-container">
       <div class="envelope" id="envelope">
         <div class="envelope-body"></div>

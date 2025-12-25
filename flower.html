@@ -53,6 +53,31 @@
         }
       }
 
+      /* Music control button */
+      .music-control {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
+        transition: all 0.3s ease;
+        z-index: 1001;
+      }
+
+      .music-control:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 20px rgba(255, 107, 157, 0.5);
+      }
+
       /* Tablet */
       @media screen and (max-width: 1024px) {
         .envelope-btn {
@@ -66,6 +91,11 @@
         .envelope-btn {
           padding: 15px 30px;
           font-size: 1.1rem;
+        }
+        .music-control {
+          width: 45px;
+          height: 45px;
+          font-size: 1.3rem;
         }
       }
 
@@ -91,6 +121,11 @@
           padding: 10px 20px;
           font-size: 0.85rem;
         }
+        .music-control {
+          width: 40px;
+          height: 40px;
+          font-size: 1.2rem;
+        }
       }
 
       /* Landscape orientation */
@@ -103,6 +138,13 @@
     </style>
   </head>
   <body class="container">
+    <!-- Background Music -->
+    <audio id="bgMusic" loop>
+      <source src="1.mp3" type="audio/mpeg">
+    </audio>
+
+    <button class="music-control" id="musicToggle" onclick="toggleMusic()">🔊</button>
+
     <div class="night"></div>
     <div class="flowers">
       <div class="flower flower--1">
@@ -419,5 +461,40 @@
     </button>
 
     <script src="main.js"></script>
+    <script>
+        const music = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+                musicToggle.textContent = '🔇';
+                isPlaying = false;
+            } else {
+                music.play().catch(e => console.log('Playback prevented:', e));
+                musicToggle.textContent = '🔊';
+                isPlaying = true;
+            }
+        }
+
+        // Auto-play on page load
+        window.addEventListener('load', function() {
+            music.play().catch(e => {
+                console.log('Autoplay prevented:', e);
+                // Music will play after first user interaction
+            });
+            isPlaying = true;
+        });
+
+        // Fallback: Play on first click
+        document.body.addEventListener('click', function() {
+            if (!isPlaying) {
+                music.play().catch(e => console.log('Playback prevented:', e));
+                musicToggle.textContent = '🔊';
+                isPlaying = true;
+            }
+        }, { once: true });
+    </script>
   </body>
 </html>
